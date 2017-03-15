@@ -1,22 +1,24 @@
-project('gtk-test', 'c',
+project('gt', 'c',
   version : '0.0.1',
   license : 'MIT',
   default_options : ['c_std=gnu11'])
 
-gtk_test_version = meson.project_version().split('.')
-gtk_test_major_version = gtk_test_version[0].to_int()
-gtk_test_minor_version = gtk_test_version[1].to_int()
-gtk_test_micro_version = gtk_test_version[2].to_int()
-if gtk_test_version.length() == 4
-  gtk_test_nano_version = gtk_test_version[3].to_int()
+gnome = import('gnome')
+
+gt_version = meson.project_version().split('.')
+gt_major_version = gt_version[0].to_int()
+gt_minor_version = gt_version[1].to_int()
+gt_micro_version = gt_version[2].to_int()
+if gt_version.length() == 4
+  gt_nano_version = gt_version[3].to_int()
 else
-  gtk_test_nano_version = 0
+  gt_nano_version = 0
 endif
 
-gtk_test_prefix = get_option('prefix')
-gtk_test_libdir = join_paths(gtk_test_prefix, get_option('libdir'))
-gtk_test_datadir = join_paths(gtk_test_prefix, get_option('datadir'))
-gtk_test_includedir = join_paths(gtk_test_prefix, get_option('includedir'))
+gt_prefix = get_option('prefix')
+gt_libdir = join_paths(gt_prefix, get_option('libdir'))
+gt_datadir = join_paths(gt_prefix, get_option('datadir'))
+gt_includedir = join_paths(gt_prefix, get_option('includedir'))
 
 cc = meson.get_compiler('c')
 
@@ -29,9 +31,11 @@ conf.set_quoted('PACKAGE_LIBDIR', join_paths(get_option('prefix'), get_option('l
 conf.set_quoted('PACKAGE_LOCALEDIR', join_paths(get_option('prefix'), get_option('datadir'), 'locale'))
 conf.set_quoted('PACKAGE_LIBEXECDIR', join_paths(get_option('prefix'), get_option('libexecdir')))
 
-conf.set('GTK_TEST_MAJOR_VERSION', gtk_test_major_version)
-conf.set('GTK_TEST_MINOR_VERSION', gtk_test_minor_version)
-conf.set('GTK_TEST_MICRO_VERSION', gtk_test_micro_version)
+conf.set('GT_CREATED_YEAR', 2017)
+
+conf.set('GT_MAJOR_VERSION', gt_major_version)
+conf.set('GT_MINOR_VERSION', gt_minor_version)
+conf.set('GT_MICRO_VERSION', gt_micro_version)
 
 my_args = [
   '-Wpointer-arith',
@@ -76,4 +80,8 @@ configure_file(
   configuration : conf
 )
 
+resource_dir = join_paths(meson.source_root(), 'data')
+gt_gresource = files(join_paths(resource_dir, 'gt.gresource.xml'))
+
+subdir('data')
 subdir('src')

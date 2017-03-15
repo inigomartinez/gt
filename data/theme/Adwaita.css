@@ -1,0 +1,20 @@
+.transparent {
+    background-color: transparent;
+}
+
+arrow-frame:dir(ltr) {
+    border-right-width: 0px;
+}
+
+arrow-frame:dir(rtl) {
+    border-left-width: 0px;
+}
+
+label.main-title {
+    font-size: 28px;
+}
+
+/* circle button */
+button.circle {
+    border-radius: 20px;
+}

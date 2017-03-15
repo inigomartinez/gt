@@ -21,21 +21,19 @@
  * IN THE SOFTWARE.
  */
 
+#ifndef GT_APPLICATION_H
+#define GT_APPLICATION_H
+
 #include <gtk/gtk.h>
 
-#include "gt-application.h"
+G_BEGIN_DECLS
 
-int
-main (int    argc,
-      char **argv)
-{
-  GtApplication *app;
-  int status;
+#define GT_TYPE_APPLICATION (gt_application_get_type())
 
-  app = gt_application_new ();
-  g_application_set_default (G_APPLICATION (app));
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
+G_DECLARE_FINAL_TYPE (GtApplication, gt_application, GT, APPLICATION, GtkApplication)
 
-  return status;
-}
+GtApplication *gt_application_new (void);
+
+G_END_DECLS
+
+#endif /* GT_APPLICATION_H */

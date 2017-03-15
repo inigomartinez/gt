@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/test/gt">
+    <file alias="gtk/menus.ui">gtk/menus.ui</file>
+    <file compressed="true">theme/Adwaita.css</file>
+  </gresource>
+</gresources>
