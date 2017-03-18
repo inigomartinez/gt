@@ -36,9 +36,7 @@ typedef struct
 
 struct _GtApplication
 {
-  GtkApplication        application;
-
-  GtApplicationPrivate *priv;
+  GtkApplication parent;
 };
 
 static void gt_application_show_about (GSimpleAction *simple,
@@ -61,15 +59,17 @@ gt_application_show_about (GSimpleAction *simple,
                            GVariant      *parameter,
                            gpointer       user_data)
 {
-  GtApplicationPrivate *priv = GT_APPLICATION (user_data)->priv;
-  gchar *copyright;
+  GtApplicationPrivate *priv;
   GDateTime *date;
   gint year;
+  gchar *copyright;
 
   static const gchar *authors[] = {
     "Iñigo Martínez <inigomartinez@gmail.com>",
     NULL
   };
+
+  priv = gt_application_get_instance_private (user_data);
 
   date = g_date_time_new_now_local ();
   year = g_date_time_get_year (date);
@@ -104,7 +104,9 @@ gt_application_quit (GSimpleAction *simple,
                      GVariant      *parameter,
                      gpointer       user_data)
 {
-  GtApplicationPrivate *priv = GT_APPLICATION (user_data)->priv;
+  GtApplicationPrivate *priv;
+
+  priv = gt_application_get_instance_private (user_data);
 
   gtk_widget_destroy (priv->window);
 }
@@ -128,7 +130,7 @@ run_window (GtApplication *application)
 
   g_return_if_fail (GT_IS_APPLICATION (application));
 
-  priv = application->priv;
+  priv = gt_application_get_instance_private (application);
 
   if (!priv->window)
   {
@@ -143,7 +145,9 @@ run_window (GtApplication *application)
 static void
 gt_application_activate (GApplication *application)
 {
-  GtApplicationPrivate *priv = GT_APPLICATION (application)->priv;
+  GtApplicationPrivate *priv;
+
+  priv = gt_application_get_instance_private (GT_APPLICATION (application));
 
   if (!priv->provider)
   {
@@ -152,8 +156,7 @@ gt_application_activate (GApplication *application)
                                                GTK_STYLE_PROVIDER (priv->provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
 
-    gtk_css_provider_load_from_resource (priv->provider,
-                                         "/org/test/gt/theme/Adwaita.css");
+    gtk_css_provider_load_from_resource (priv->provider, "/org/test/gt/theme/Adwaita.css");
   }
 
   run_window (GT_APPLICATION (application));
@@ -202,7 +205,5 @@ gt_application_class_init (GtApplicationClass *klass)
 static void
 gt_application_init (GtApplication *self)
 {
-  GtApplicationPrivate *priv = gt_application_get_instance_private (self);
 
-  self->priv = priv;
 }
