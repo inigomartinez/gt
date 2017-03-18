@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "gt-application.h"
+#include "gt-window.h"
 
 typedef struct
 {
@@ -133,11 +134,7 @@ run_window (GtApplication *application)
   priv = gt_application_get_instance_private (application);
 
   if (!priv->window)
-  {
-    priv->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_application_add_window (GTK_APPLICATION (application),
-                                GTK_WINDOW (priv->window));
-  }
+    priv->window = gt_window_new (application);
 
   gtk_widget_show (priv->window);
 }

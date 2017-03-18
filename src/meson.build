@@ -1,3 +1,4 @@
+
 configure_file(output: 'config.h', configuration: conf)
 
 resources = gnome.compile_resources(
@@ -13,6 +14,8 @@ sources = [
   resources,
   'gt-application.h',
   'gt-application.c',
+  'gt-window.h',
+  'gt-window.c',
   'main.c',
 ]
 
