@@ -44,7 +44,6 @@ my_args = [
   '-Wstrict-prototypes',
   '-Wmissing-prototypes',
   '-Wnested-externs',
-  '-Wbad-function-cast',
   '-Wold-style-definition',
   '-Wdeclaration-after-statement',
   '-Wunused',
