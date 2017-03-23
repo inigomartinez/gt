@@ -14,6 +14,8 @@ sources = [
   resources,
   'gt-application.h',
   'gt-application.c',
+  'gt-header-bar.h',
+  'gt-header-bar.c',
   'gt-window.h',
   'gt-window.c',
   'main.c',

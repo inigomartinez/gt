@@ -21,46 +21,19 @@
  * IN THE SOFTWARE.
  */
 
+#ifndef GT_HEADER_BAR_H
+#define GT_HEADER_BAR_H
+
 #include <gtk/gtk.h>
 
-#include "gt-application.h"
-#include "gt-header-bar.h"
-#include "gt-window.h"
+G_BEGIN_DECLS
 
-typedef struct
-{
-  GtkWidget *header_bar;
-} GtWindowPrivate;
+#define GT_TYPE_HEADER_BAR (gt_header_bar_get_type())
 
-struct _GtWindow
-{
-  GtkApplicationWindow parent;
-};
+G_DECLARE_FINAL_TYPE (GtHeaderBar, gt_header_bar, GT, HEADER_BAR, GtkHeaderBar)
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtWindow, gt_window, GTK_TYPE_APPLICATION_WINDOW)
+GtkWidget *gt_header_bar_new (void);
 
-static void
-gt_window_class_init (GtWindowClass *klass)
-{
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+G_END_DECLS
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/test/gt/ui/window.ui");
-
-  g_type_ensure (GT_TYPE_HEADER_BAR);
-
-  gtk_widget_class_bind_template_child_private (widget_class, GtWindow, header_bar);
-}
-
-static void
-gt_window_init (GtWindow *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
-}
-
-GtkWidget *
-gt_window_new (GtApplication *application)
-{
-  return g_object_new (GT_TYPE_WINDOW,
-                       "application", application,
-                       NULL);
-}
+#endif /* GT_HEADER_BAR_H */
