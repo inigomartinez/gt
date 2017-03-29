@@ -18,3 +18,7 @@ label.main-title {
 button.circle {
     border-radius: 20px;
 }
+
+.note-window {
+    background-color: rgb(246,218,18);
+}

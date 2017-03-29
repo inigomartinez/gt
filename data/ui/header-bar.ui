@@ -12,116 +12,73 @@
     <property name="icon_name">view-grid-symbolic</property>
     <property name="icon_size">1</property>
   </object>
-  <object class="GtkMenu" id="menu">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
+  <object class="GtkPopover" id="menu">
     <child>
-      <object class="GtkMenuItem" id="menu_new">
-        <property name="label" translatable="yes">Open in New Window</property>
-        <property name="visible">False</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem">
-        <property name="label" translatable="yes">Undo</property>
+      <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-        <!-- <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK"/> -->
+        <property name="margin">10</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkModelButton" id="menu_new_button">
+            <property name="text" translatable="yes">Open in New Window</property>
+            <property name="visible">False</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+            <signal name="clicked" handler="on_menu_new_button_clicked" object="GtHeaderBar" swapped="yes"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="text" translatable="yes">Undo</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+            <!-- <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK"/> -->
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="text" translatable="yes">Redo</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+            <!-- <accelerator key="z" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/> -->
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton" id="menu_notebooks_button">
+            <property name="text" translatable="yes">Notebooks</property>
+            <property name="visible">False</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="text" translatable="yes">Email this Note</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="text" translatable="yes">Move to Trash</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_underline">True</property>
+            <signal name="clicked" handler="header_bar_set_main" object="GtHeaderBar" swapped="yes"/>
+            <!-- <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/> -->
+          </object>
+        </child>
       </object>
     </child>
-    <child>
-      <object class="GtkMenuItem">
-        <property name="label" translatable="yes">Redo</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-        <!-- <accelerator key="z" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/> -->
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="menu_notebooks">
-        <property name="label" translatable="yes">Notebooks</property>
-        <property name="visible">False</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem">
-        <property name="label" translatable="yes">Email this Note</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem">
-        <property name="label" translatable="yes">Move to Trash</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
-        <!-- <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/> -->
-      </object>
-    </child>
-  </object>
-  <object class="GtkButton" id="back_button">
-    <property name="visible">False</property>
-    <property name="can_focus">True</property>
-    <property name="receives_default">True</property>
-    <property name="valign">center</property>
-    <property name="image">back_image</property>
-    <style>
-      <class name="image-button"/>
-    </style>
-    <child>
-      <object class="GtkImage" id="back_image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="icon_name">go-previous-symbolic</property>
-        <property name="icon_size">1</property>
-      </object>
-    </child>
-  </object>
-  <object class="GtkButton" id="cancel_button">
-    <property name="label" translatable="yes">Cancel</property>
-    <property name="visible">False</property>
-    <property name="can_focus">True</property>
-    <property name="receives_default">True</property>
-    <property name="tooltip_text" translatable="yes">Exit selection mode</property>
-    <property name="valign">center</property>
-    <style>
-      <class name="text-button"/>
-    </style>
-  </object>
-  <object class="GtkButton" id="empty_bin_button">
-    <property name="label" translatable="yes">Empty</property>
-    <property name="visible">False</property>
-    <property name="can_focus">True</property>
-    <property name="receives_default">True</property>
-    <property name="valign">center</property>
-    <style>
-      <class name="destructive-action"/>
-    </style>
-  </object>
-  <object class="GtkMenuButton" id="menu_button">
-    <property name="visible">False</property>
-    <property name="can_focus">True</property>
-    <property name="receives_default">True</property>
-    <property name="tooltip_text" translatable="yes">More options…</property>
-    <property name="direction">none</property>
-    <property name="popup">menu</property>
-    <style>
-      <class name="image-button"/>
-    </style>
   </object>
   <template class="GtHeaderBar" parent="GtkHeaderBar">
     <property name="visible">True</property>
@@ -137,11 +94,33 @@
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
         <property name="valign">center</property>
+        <signal name="clicked" handler="on_new_button_clicked" object="GtHeaderBar" swapped="yes"/>
       </object>
       <packing>
         <property name="pack_type">start</property>
         <property name="position">0</property>
       </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="back_button">
+        <property name="visible">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="valign">center</property>
+        <property name="image">back_image</property>
+        <signal name="clicked" handler="header_bar_set_main" object="GtHeaderBar" swapped="yes"/>
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child>
+          <object class="GtkImage" id="back_image">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon_name">go-previous-symbolic</property>
+            <property name="icon_size">1</property>
+          </object>
+        </child>
+      </object>
     </child>
     <child>
       <object class="GtkToggleButton" id="search_button">
@@ -176,6 +155,7 @@
         <property name="tooltip_text" translatable="yes">View notes and notebooks in a list"</property>
         <property name="valign">center</property>
         <property name="image">list_image</property>
+        <signal name="clicked" handler="on_mode_button_clicked" object="GtHeaderBar" swapped="yes"/>
         <style>
           <class name="image-button"/>
         </style>
@@ -193,6 +173,7 @@
         <property name="tooltip_text" translatable="yes">Selection mode</property>
         <property name="valign">center</property>
         <property name="image">select_image</property>
+        <signal name="clicked" handler="on_select_button_clicked" object="GtHeaderBar" swapped="yes"/>
         <style>
           <class name="image-button"/>
         </style>
@@ -204,6 +185,77 @@
             <property name="icon_size">1</property>
           </object>
         </child>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="cancel_button">
+        <property name="label" translatable="yes">Cancel</property>
+        <property name="visible">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="tooltip_text" translatable="yes">Exit selection mode</property>
+        <property name="valign">center</property>
+        <signal name="clicked" handler="on_cancel_button_clicked" object="GtHeaderBar" swapped="yes"/>
+        <style>
+          <class name="text-button"/>
+        </style>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="empty_bin_button">
+        <property name="label" translatable="yes">Empty</property>
+        <property name="visible">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="valign">center</property>
+        <style>
+          <class name="destructive-action"/>
+        </style>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkColorButton" id="color_button">
+        <property name="width_request">22</property>
+        <property name="height_request">22</property>
+        <property name="visible">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="tooltip_text" translatable="yes">Note color</property>
+        <property name="rgba">rgb(246,218,18)</property>
+        <signal name="color-set" handler="on_color_button_color_set" swapped="no"/>
+        <style>
+          <class name="button"/>
+        </style>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="menu_button">
+        <property name="visible">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="tooltip_text" translatable="yes">More options…</property>
+        <property name="direction">none</property>
+        <property name="popover">menu</property>
+        <!-- <property name="use_popover">True</property> -->
+        <style>
+          <class name="image-button"/>
+        </style>
       </object>
       <packing>
         <property name="pack_type">end</property>
