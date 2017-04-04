@@ -30,6 +30,10 @@
 typedef struct
 {
   GtkWidget *header_bar;
+
+  GtkWidget *search_bar;
+
+  GtkWidget *spinner;
 } GtWindowPrivate;
 
 struct _GtWindow
@@ -39,16 +43,45 @@ struct _GtWindow
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtWindow, gt_window, GTK_TYPE_APPLICATION_WINDOW)
 
+static gboolean
+on_key_press_event (GtkSearchBar *search_bar,
+                    GdkEvent     *event,
+                    gpointer      user_data)
+{
+  return gtk_search_bar_handle_event (search_bar, event);
+}
+
+static void
+gt_window_constructed (GObject *object)
+{
+  GtWindowPrivate *priv;
+
+  priv = gt_window_get_instance_private (GT_WINDOW (object));
+
+  G_OBJECT_CLASS (gt_window_parent_class)->constructed (object);
+
+  g_object_bind_property (priv->search_bar, "search-mode-enabled",
+                          priv->spinner, "active",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+}
+
 static void
 gt_window_class_init (GtWindowClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->constructed = gt_window_constructed;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/test/gt/ui/window.ui");
 
   g_type_ensure (GT_TYPE_HEADER_BAR);
 
   gtk_widget_class_bind_template_child_private (widget_class, GtWindow, header_bar);
+  gtk_widget_class_bind_template_child_private (widget_class, GtWindow, search_bar);
+  gtk_widget_class_bind_template_child_private (widget_class, GtWindow, spinner);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_key_press_event);
 }
 
 static void
