@@ -73,6 +73,8 @@ my_args = [
 add_global_arguments(my_args, language : 'c')
 
 gtk_dep = dependency('gtk+-3.0')
+libpeas_dep = dependency('libpeas-1.0')
+libpeas_gtk_dep = dependency('libpeas-gtk-1.0')
 
 configure_file(
   output : 'config.h',

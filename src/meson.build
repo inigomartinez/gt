@@ -16,6 +16,8 @@ sources = [
   'gt-application.c',
   'gt-header-bar.h',
   'gt-header-bar.c',
+  'gt-preferences.h',
+  'gt-preferences.c',
   'gt-window.h',
   'gt-window.c',
   'main.c',
@@ -23,5 +25,5 @@ sources = [
 
 executable(
   'gt', [sources],
-  dependencies : [gtk_dep]
+  dependencies : [gtk_dep, libpeas_dep, libpeas_gtk_dep]
 )

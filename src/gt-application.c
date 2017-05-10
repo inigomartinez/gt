@@ -26,12 +26,14 @@
 #include <gtk/gtk.h>
 
 #include "gt-application.h"
+#include "gt-preferences.h"
 #include "gt-window.h"
 
 typedef struct
 {
   GtkCssProvider *provider;
 
+  GtkWidget      *preferences;
   GtkWidget      *window;
 } GtApplicationPrivate;
 
@@ -40,20 +42,42 @@ struct _GtApplication
   GtkApplication parent;
 };
 
-static void gt_application_show_about (GSimpleAction *simple,
-                                       GVariant      *parameter,
-                                       gpointer       user_data);
+static void gt_application_show_preferences (GSimpleAction *simple,
+                                             GVariant      *parameter,
+                                             gpointer       user_data);
 
-static void gt_application_quit       (GSimpleAction *simple,
-                                       GVariant      *parameter,
-                                       gpointer       user_data);
+static void gt_application_show_about       (GSimpleAction *simple,
+                                             GVariant      *parameter,
+                                             gpointer       user_data);
+
+static void gt_application_quit             (GSimpleAction *simple,
+                                             GVariant      *parameter,
+                                             gpointer       user_data);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtApplication, gt_application, GTK_TYPE_APPLICATION)
 
 static const GActionEntry gt_application_entries[] = {
-  { "about", gt_application_show_about },
-  { "quit",  gt_application_quit }
+  { "preferences", gt_application_show_preferences },
+  { "about",       gt_application_show_about },
+  { "quit",        gt_application_quit }
 };
+
+static void
+gt_application_show_preferences (GSimpleAction *simple,
+                                 GVariant      *parameter,
+                                 gpointer       user_data)
+{
+  GtApplicationPrivate *priv;
+
+  g_return_if_fail (GT_IS_APPLICATION (user_data));
+
+  priv = gt_application_get_instance_private (user_data);
+
+  if (!priv->preferences)
+    priv->preferences = gt_preferences_new (GTK_WINDOW (priv->window));
+
+  gtk_widget_show (priv->preferences);
+}
 
 static void
 gt_application_show_about (GSimpleAction *simple,
@@ -109,6 +133,7 @@ gt_application_quit (GSimpleAction *simple,
 
   priv = gt_application_get_instance_private (user_data);
 
+  gtk_widget_destroy (priv->preferences);
   gtk_widget_destroy (priv->window);
 }
 

@@ -3,6 +3,7 @@
   <gresource prefix="/org/test/gt">
     <file alias="gtk/menus.ui">gtk/menus.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/header-bar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="true">theme/Adwaita.css</file>
   </gresource>
