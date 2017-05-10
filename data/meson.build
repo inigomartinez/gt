@@ -9,5 +9,5 @@ files = [
 
 install_data(
   files,
-  install_dir: get_option('datadir')
+  install_dir: gt_datadir
 )

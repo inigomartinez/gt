@@ -1,13 +1,12 @@
-
-configure_file(output: 'config.h', configuration: conf)
+data_dir = join_paths(meson.source_root(), 'data')
 
 resources = gnome.compile_resources(
   'gt-resources',
-  gt_gresource,
-  install_header : true,
-  export : true,
-  source_dir : resource_dir,
-  c_name : 'gt'
+  join_paths(data_dir, 'gt.gresource.xml'),
+  install_header: true,
+  export: true,
+  source_dir: data_dir,
+  c_name: 'gt'
 )
 
 sources = [
@@ -24,6 +23,13 @@ sources = [
 ]
 
 executable(
-  'gt', [sources],
-  dependencies : [gtk_dep, libpeas_dep, libpeas_gtk_dep]
+  'gt',
+  sources,
+  include_directories: top_inc,
+  dependencies: [
+    gtk_dep,
+    libpeas_dep,
+    libpeas_gtk_dep
+  ],
+  install: true
 )
